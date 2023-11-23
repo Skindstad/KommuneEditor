@@ -19,7 +19,7 @@ namespace KommuneEditor.Model
 
         public Aarstal(string year)
         {
-            Year += year;
+            Year = year;
         }
 
         public override bool Equals(object obj)

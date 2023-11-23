@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KommuneEditor.Model
 {
-    internal class KeyNumber
+    internal class Keynummer
     {
     }
 }

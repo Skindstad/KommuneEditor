@@ -9,9 +9,9 @@ namespace KommuneEditor.Model
 {
     public class Kommune : IDataErrorInfo, IComparable<Kommune>
     {
-        public string KomNr { get; set; }
+        public string KomNr { get; set; } // kom_nr
 
-        public string City { get; set; }
+        public string City { get; set; } // by / Kommune
 
         public Kommune()
         {

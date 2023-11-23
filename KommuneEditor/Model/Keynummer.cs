@@ -9,19 +9,19 @@ namespace KommuneEditor.Model
 {
     internal class Keynummer : IDataErrorInfo, IComparable<Keynummer>
     {
-        public string KeyID { get; set; }
-        public string Gruppe {  get; set; }
+        public string KeyId { get; set; } // ID
+        public string Gruppe {  get; set; } // Nøgletal
 
 
         public Keynummer() 
         {
-            KeyID = "";
+            KeyId = "";
             Gruppe = "";
         }
 
         public Keynummer(string keyID, string gruppe)
         {
-            KeyID = keyID;
+            KeyId = keyID;
             Gruppe = gruppe;
         }
 
@@ -30,7 +30,7 @@ namespace KommuneEditor.Model
             try
             {
                 Keynummer keynummer = (Keynummer)obj;
-                return KeyID.Equals(keynummer.KeyID);
+                return KeyId.Equals(keynummer.KeyId);
             }
             catch
             {
@@ -40,23 +40,23 @@ namespace KommuneEditor.Model
 
         public override int GetHashCode()
         {
-            return KeyID.GetHashCode();
+            return KeyId.GetHashCode();
         }
 
         public override string ToString()
         {
-            return string.Format("{0} ", KeyID);
+            return string.Format("{0} ", KeyId);
         }
 
         // Implementerer ordning af objekter, så der alene sammenlignes på postnummer.
         public int CompareTo(Keynummer keynummer)
         {
-            return KeyID.CompareTo(keynummer.KeyID);
+            return KeyId.CompareTo(keynummer.KeyId);
         }
 
         public bool IsValid
         {
-            get { return KeyID != null && NrOk(KeyID.Trim()) && Gruppe != null && Gruppe.Length > 0; }
+            get { return KeyId != null && NrOk(KeyId.Trim()) && Gruppe != null && Gruppe.Length > 0; }
         }
 
         string IDataErrorInfo.Error
@@ -71,8 +71,8 @@ namespace KommuneEditor.Model
 
         private string Validate(string property)
         {
-            if (property.Equals("KeyID")) return KeyID != null && NrOk(KeyID.Trim()) ? null : "Illegal KeyID";
-            if (property.Equals("Kommune")) return Gruppe != null && Gruppe.Length > 0 ? null : "Illegal gruppe";
+            if (property.Equals("KeyId")) return KeyId != null && NrOk(KeyId.Trim()) ? null : "Illegal KeyID";
+            if (property.Equals("Gruppe")) return Gruppe != null && Gruppe.Length > 0 ? null : "Illegal gruppe";
             return null;
         }
 

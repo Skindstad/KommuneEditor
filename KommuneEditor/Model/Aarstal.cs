@@ -10,7 +10,7 @@ namespace KommuneEditor.Model
 {
     internal class Aarstal : IDataErrorInfo, IComparable<Aarstal>
     {
-        public string Year { get; set; }
+        public string Year { get; set; } // år
 
         public Aarstal()
         {

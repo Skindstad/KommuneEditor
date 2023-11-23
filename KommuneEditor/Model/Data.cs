@@ -129,11 +129,7 @@ namespace KommuneEditor.Model
             return null;
         }
 
-        private bool NrOk(string keyID)
-        {
-            foreach (char c in keyID) if (c < '0' || c > '9') return false;
-            return true;
-        }
+     
 
     }
 }

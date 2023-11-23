@@ -114,7 +114,7 @@ namespace KommuneEditor.Model
         }
         private string ValidateKeynummer()
         {
-            foreach (char c in Keynummer) if (c < '0' || c > '9') return "Keynumber must be a number";
+            foreach (char c in Keynummer) if (c < '0' || c > '9') return "Keynummer must be a number";
             return null;
         }
         private string ValidateAarstal()

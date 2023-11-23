@@ -8,7 +8,7 @@ namespace KommuneEditor.DataAccess
 {
   // Definerer typen af hhv. den databaseoperation, der er udført og af hvilket repository.
   public enum DbOperation { SELECT, INSERT, UPDATE, DELETE };
-  public enum DbModeltype { Keysnumber, Keygruppe, Kommune, Aarstal }
+  public enum DbModeltype { Data, Keynummer, Kommune, Aarstal }
 
   // EventArgs for en databaseoperation.
   public class DbEventArgs : EventArgs

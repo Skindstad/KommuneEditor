@@ -71,8 +71,8 @@ namespace KommuneEditor.Model
 
         private string Validate(string property)
         {
-            if (property.Equals("KomNr")) return KomNr != null && NrOk(KomNr.Trim()) ? null : "Illegal code";
-            if (property.Equals("Kommune")) return City != null && City.Length > 0 ? null : "Illegal code";
+            if (property.Equals("KomNr")) return KomNr != null && NrOk(KomNr.Trim()) ? null : "Illegal kom_nr";
+            if (property.Equals("Kommune")) return City != null && City.Length > 0 ? null : "Illegal City";
             return null;
         }
 

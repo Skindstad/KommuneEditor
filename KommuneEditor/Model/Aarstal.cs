@@ -68,7 +68,7 @@ namespace KommuneEditor.Model
 
         private string Validate(string property)
         {
-            if (property.Equals("Year")) return Year != null && YearOk(Year.Trim()) ? null : "Illegal code";
+            if (property.Equals("Year")) return Year != null && YearOk(Year.Trim()) ? null : "Illegal Year";
             return null;
         }
 

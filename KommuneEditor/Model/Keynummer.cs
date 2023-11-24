@@ -15,13 +15,11 @@ namespace KommuneEditor.Model
 
         public Keynummer() 
         {
-            KeyId = "";
             Gruppe = "";
         }
 
-        public Keynummer(string keyID, string gruppe)
-        {
-            KeyId = keyID;
+        public Keynummer(string gruppe)
+        {;
             Gruppe = gruppe;
         }
 
@@ -56,7 +54,7 @@ namespace KommuneEditor.Model
 
         public bool IsValid
         {
-            get { return KeyId != null && NrOk(KeyId.Trim()) && Gruppe != null && Gruppe.Length > 0; }
+            get { return Gruppe != null && Gruppe.Length > 0; }
         }
 
         string IDataErrorInfo.Error
@@ -71,15 +69,8 @@ namespace KommuneEditor.Model
 
         private string Validate(string property)
         {
-            if (property.Equals("KeyId")) return KeyId != null && NrOk(KeyId.Trim()) ? null : "Illegal KeyID";
             if (property.Equals("Gruppe")) return Gruppe != null && Gruppe.Length > 0 ? null : "Illegal gruppe";
             return null;
-        }
-
-        private bool NrOk(string keyID)
-        {
-            foreach (char c in keyID) if (c < '0' || c > '9') return false;
-            return true;
         }
     }
 }

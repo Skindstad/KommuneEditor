@@ -1,17 +1,13 @@
-﻿using System;
+﻿using KommuneEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using KommuneEditor.Model;
 
 namespace KommuneEditor.DataAccess
 {
-    internal class AarstalRepository : Repository, IEnumerable<Aarstal>
+    public class AarstalRepository : Repository, IEnumerable<Aarstal>
     {
         private List<Aarstal> list = new List<Aarstal>();
 
@@ -55,7 +51,7 @@ namespace KommuneEditor.DataAccess
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Zipcodes (Years) VALUES (@Year)", connection);
+                    SqlCommand command = new SqlCommand("INSERT INTO Aarstal (Years) VALUES (@Year)", connection);
                     command.Parameters.Add(CreateParam("@Year", year, SqlDbType.NVarChar));
                     connection.Open();
                     if (command.ExecuteNonQuery() == 1)

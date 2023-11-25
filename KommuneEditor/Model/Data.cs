@@ -9,29 +9,32 @@ using System.Windows.Input;
 
 namespace KommuneEditor.Model
 {
-    internal class Data : IDataErrorInfo, IComparable<Data>
+    public class Data : IDataErrorInfo, IComparable<Data>
     {
         public string DataId { get; set; } // Id
-        public string Kommune {  get; set; } // Kommune kom_nr
-        public string Keynummer { get; set; } // NøgleTal ID
-        public string Aarstal {  get; set; } // Year
+        public string KomNr { get; set; } // kom_nr
+        public string City {  get; set; } // By
+        public string Gruppe { get; set; } // NøgleTal
+        public string Year {  get; set; } // Year
         public string Num {  get; set; } // Tal
 
         public Data() 
         {
             DataId = "";
-            Kommune = "";
-            Keynummer = "";
-            Aarstal = "";
+            KomNr = "";
+            City = "";
+            Gruppe = "";
+            Year = "";
             Num = "";
         }
 
-        public Data(string dataID, string kommune, string keynummer, string aarstal, string num)
+        public Data(string dataId, string komNr, string city, string gruppe, string year, string num)
         {
-            DataId = dataID;
-            Kommune = kommune;
-            Keynummer = keynummer;
-            Aarstal = aarstal;
+            DataId = dataId;
+            KomNr = komNr;
+            City = city;
+            Gruppe = gruppe;
+            Year = year;
             Num = num;
         }
 
@@ -63,7 +66,7 @@ namespace KommuneEditor.Model
         {
             return DataId.CompareTo(data.DataId);
         }
-        private static readonly string[] validatedProperties = { "DataId", "Kommune", "Keynummer", "Aarstal", "Tal"};
+        private static readonly string[] validatedProperties = { "KomNr", "City", "Gruppe", "Year", "Tal"};
         public bool IsValid
         {
             get {
@@ -92,35 +95,35 @@ namespace KommuneEditor.Model
         {
             switch (name)
             {
-                case "DataId": return ValidateDataId();
-                case "Kommune": return ValidateKommune();
-                case "Keynummer": return ValidateKeynummer();
-                case "Aarstal": return ValidateAarstal();
+                case "KomNr": return ValidateKomNr();
+                case "City": return ValidateCity();
+                case "Gruppe": return ValidateGruppe();
+                case "Year": return ValidateYear();
                 case "Tal": return ValidateTal();
             }
             return null;
         }
 
-        private string ValidateDataId()
+        private string ValidateKomNr()
         {
-            foreach (char c in DataId) if (c < '0' || c > '9') return "Id must be a number";
+            if (KomNr.Length != 3) return "Kom_nr must be a number of 3 digits";
+            foreach (char c in KomNr) if (c < '0' || c > '9') return "KomNr must be a number";
             return null;
         }
-        private string ValidateKommune()
+        private string ValidateCity()
         {
-            if (Kommune.Length != 3) return "Phone must be a number of 3 digits";
-            foreach (char c in Kommune) if (c < '0' || c > '9') return "Kommune must be a number of 3 digits";
+            if (City == null || City.Length == 0) return "City can not be empty";
             return null;
         }
-        private string ValidateKeynummer()
+        private string ValidateGruppe()
         {
-            foreach (char c in Keynummer) if (c < '0' || c > '9') return "Keynummer must be a number";
+            if (Gruppe == null || Gruppe.Length == 0) return "Gruppe can not be empty";
             return null;
         }
-        private string ValidateAarstal()
+        private string ValidateYear()
         {
-            if (Aarstal.Length != 4) return "Phone must be a number of 4 digits";
-            foreach (char c in Aarstal) if (c < '0' || c > '9') return "Year must be a number of 4 digits";
+            if (Year.Length != 4) return "Year must be a number of 4 digits";
+            foreach (char c in Year) if (c < '0' || c > '9') return "Year must be a number of 4 digits";
             return null;
         }
         private string ValidateTal()

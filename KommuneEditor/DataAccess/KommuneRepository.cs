@@ -25,7 +25,7 @@ namespace KommuneEditor.DataAccess
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT KomNr, City FROM Kommune WHERE KomNr LIKE @KomNr AND City LIKE @City ", connection);
+                SqlCommand command = new SqlCommand("SELECT Kom_nr, City FROM Kommune WHERE Kom_nr LIKE @KomNr AND City LIKE @City ", connection);
                 command.Parameters.Add(CreateParam("@KomNr", komNr + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@City", city + "%", SqlDbType.NVarChar));
                 connection.Open();
@@ -53,7 +53,7 @@ namespace KommuneEditor.DataAccess
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Kommune (KomNr, City) VALUES (@KomNr, @City)", connection);
+                    SqlCommand command = new SqlCommand("INSERT INTO Kommune (Kom_nr, City) VALUES (@KomNr, @City)", connection);
                     command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@City", city, SqlDbType.NVarChar));
                     connection.Open();
@@ -87,7 +87,7 @@ namespace KommuneEditor.DataAccess
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE Kommune SET KomNr = @KomNr WHERE City = @city", connection);
+                    SqlCommand command = new SqlCommand("UPDATE Kommune SET Kom_nr = @KomNr WHERE City = @city", connection);
                     command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@City", city, SqlDbType.NVarChar));
                     connection.Open();
@@ -122,7 +122,7 @@ namespace KommuneEditor.DataAccess
             string error = "";
             try
             {
-                SqlCommand command = new SqlCommand("DELETE FROM Kommune WHERE KomNr = @KomNr", connection);
+                SqlCommand command = new SqlCommand("DELETE FROM Kommune WHERE Kom_nr = @KomNr", connection);
                 command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1)
@@ -150,7 +150,7 @@ namespace KommuneEditor.DataAccess
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT City FROM Kommune WHERE KomNr = @KomNr", connection);
+                SqlCommand command = new SqlCommand("SELECT City FROM Kommune WHERE Kom_nr = @KomNr", connection);
                 SqlParameter param = new SqlParameter("@KomNr", SqlDbType.NVarChar);
                 param.Value = komNr;
                 command.Parameters.Add(param);
@@ -173,7 +173,7 @@ namespace KommuneEditor.DataAccess
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT KomNr FROM Kommune WHERE City = @City", connection);
+                SqlCommand command = new SqlCommand("SELECT Kom_nr FROM Kommune WHERE City = @City", connection);
                 SqlParameter param = new SqlParameter("@City", SqlDbType.NVarChar);
                 param.Value = city;
                 command.Parameters.Add(param);

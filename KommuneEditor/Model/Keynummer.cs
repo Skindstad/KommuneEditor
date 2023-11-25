@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KommuneEditor.Model
 {
-    internal class Keynummer : IDataErrorInfo, IComparable<Keynummer>
+    public class Keynummer : IDataErrorInfo, IComparable<Keynummer>
     {
         public string KeyId { get; set; } // ID
         public string Gruppe {  get; set; } // Nøgletal

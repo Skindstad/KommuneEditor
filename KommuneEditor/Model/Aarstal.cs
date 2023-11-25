@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KommuneEditor.Model
 {
-    internal class Aarstal : IDataErrorInfo, IComparable<Aarstal>
+    public class Aarstal : IDataErrorInfo, IComparable<Aarstal>
     {
         public string Year { get; set; } // år
 

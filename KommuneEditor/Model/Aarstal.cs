@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KommuneEditor.Model
 {
-    internal class Aarstal : IDataErrorInfo, IComparable<Aarstal>
+    public class Aarstal : IDataErrorInfo, IComparable<Aarstal>
     {
         public string Year { get; set; } // år
 
@@ -45,7 +45,6 @@ namespace KommuneEditor.Model
             return string.Format("{0} ", Year);
         }
 
-        // Implementerer ordning af objekter, så der alene sammenlignes på postnummer.
         public int CompareTo(Aarstal aarstal)
         {
             return Year.CompareTo(aarstal.Year);

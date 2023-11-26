@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KommuneEditor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,15 @@ namespace KommuneEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel model = new MainViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = model;
+            model.WarningHandler += delegate (object sender, MessageEventArgs e) {
+                MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            };
         }
     }
 }

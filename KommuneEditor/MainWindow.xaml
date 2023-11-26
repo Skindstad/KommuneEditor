@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KommuneEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+         Title="MainWindow" Height="350" Width="525">
+    <DockPanel Margin="10">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Functions">
+                <MenuItem Header="Create New Data" Command="{Binding Path=CreateCommand}" />
+                <Separator />
+                <MenuItem Header="Clear fields" Command="{Binding Path=ClearCommand}" />
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <StackPanel Orientation="Vertical" Margin="10">
+                <ComboBox ItemsSource="{Binding DataList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedIdComboBox1}" />
+                <ComboBox ItemsSource="{Binding DataList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedIdComboBox2}" />
+                <ComboBox ItemsSource="{Binding DataList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedIdComboBox3}" />
 
-    </Grid>
+                <Button Content="Search" Command="{Binding SearchCommand}" Margin="0,10,0,0" />
+
+                <DataGrid ItemsSource="{Binding DataList}" AutoGenerateColumns="True" Margin="0,10,0,0" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </Window>

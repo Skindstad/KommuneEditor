@@ -10,7 +10,7 @@ namespace KommuneEditor.Model
 {
     internal class Aarstal : IDataErrorInfo, IComparable<Aarstal>
     {
-        public string Year { get; set; }
+        public string Year { get; set; } // år
 
         public Aarstal()
         {
@@ -19,7 +19,7 @@ namespace KommuneEditor.Model
 
         public Aarstal(string year)
         {
-            Year += year;
+            Year = year;
         }
 
         public override bool Equals(object obj)
@@ -68,7 +68,7 @@ namespace KommuneEditor.Model
 
         private string Validate(string property)
         {
-            if (property.Equals("Year")) return Year != null && YearOk(Year.Trim()) ? null : "Illegal code";
+            if (property.Equals("Year")) return Year != null && YearOk(Year.Trim()) ? null : "Illegal Year";
             return null;
         }
 

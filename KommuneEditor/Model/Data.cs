@@ -131,8 +131,5 @@ namespace KommuneEditor.Model
             foreach (char c in Num) if (c < '0' || c > '9') return "Number must be a number";
             return null;
         }
-
-     
-
     }
 }

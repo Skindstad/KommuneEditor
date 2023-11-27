@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KommuneEditor.Model;
 using System.Configuration;
+using System.ComponentModel;
 
 namespace KommuneEditor.DataAccess
 {

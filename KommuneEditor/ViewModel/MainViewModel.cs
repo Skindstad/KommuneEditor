@@ -20,52 +20,116 @@ namespace KommuneEditor.ViewModel
         public RelayCommand ClearCommand { get; private set; }
         public static DataRepository repository = new DataRepository();
         private ObservableCollection<Data> bindData;
-        private ObservableCollection<string> cityOptions;
-
+        private string dataId = "";
+        private string komNr = "";
+        private string city = "";
+        private string gruppe = "";
+        private string year = "";
+        private string num = "";
 
 
         public MainViewModel()
         {
-            //SearchCommand = new RelayCommand(p => Search(), p => CanSearch());
+            SearchCommand = new RelayCommand(p => Search(), p => CanSearch());
             //CreateCommand = new RelayCommand(p => (new CreateWindow()).ShowDialog());
             //DataCommand = new RelayCommand(p => (new DataWindow()).ShowDialog());
             ClearCommand = new RelayCommand(p => Clear());
             bindData = new ObservableCollection<Data>(repository);
             repository.RepositoryChanged += Refresh;
-            CityOptions = new ObservableCollection<string>(repository.Select(data => data.City).Distinct());
-
         }
 
         private void Refresh(object sender, DbEventArgs e)
         {
             BindData = new ObservableCollection<Data>(repository);
         }
-
+        
         public ObservableCollection<Data> BindData
         {
-            get
-            {
-                return bindData ?? (bindData = new ObservableCollection<Data>());
-            }
+            get { return bindData; }
             set
             {
-                if (!ReferenceEquals(bindData, value))
+                if (!bindData.Equals(value))
                 {
                     bindData = value;
-                    OnPropertyChanged(nameof(BindData));
+                    OnPropertyChanged("BindData");
                 }
             }
         }
 
-        public ObservableCollection<string> CityOptions
+        public string DataId
         {
-            get { return cityOptions; }
+            get { return dataId; }
             set
             {
-                if (cityOptions != value)
+                if (!dataId.Equals(value))
                 {
-                    cityOptions = value;
-                    OnPropertyChanged(nameof(CityOptions));
+                    dataId = value;
+                    OnPropertyChanged("DataId");
+                }
+            }
+        }
+
+        public string KomNr
+        {
+            get { return komNr; }
+            set
+            {
+                if (!komNr.Equals(value))
+                {
+                    komNr = value;
+                    OnPropertyChanged("KomNr");
+                }
+            }
+        }
+
+        public string City
+        {
+            get { return city; }
+            set
+            {
+                if (!city.Equals(value))
+                {
+                    city = value;
+                    OnPropertyChanged("City");
+                }
+            }
+        }
+
+        public string Gruppe
+        {
+            get { return gruppe; }
+            set
+            {
+                if (!gruppe.Equals(value))
+                {
+                    gruppe = value;
+                    OnPropertyChanged("Gruppe");
+                }
+            }
+        }
+
+        public string Year
+        {
+            get { return year; }
+            set
+            {
+                if (!year.Equals(value))
+                {
+                    year = value;
+                    OnPropertyChanged("Year");
+                }
+            }
+        }
+
+        public string Num
+        {
+            get { return num; }
+            set
+            {
+                if (!num.Equals(value))
+                {
+                    num = value;
+                    OnPropertyChanged("Num");
                 }
             }
         }
@@ -74,12 +138,12 @@ namespace KommuneEditor.ViewModel
         {
 
         }
-        /*
+        
         private void Search()
         {
             try
             {
-                repository.Search();
+                repository.Search(komNr, city, gruppe, year);
                 BindData = new ObservableCollection<Data>(repository);
             }
             catch (Exception ex)
@@ -96,7 +160,9 @@ namespace KommuneEditor.ViewModel
         */
         private bool CanSearch()
         {
-            return true;
+            return komNr.Length > 0 || city.Length > 0 ||
+                gruppe.Length > 0 || year.Length > 0 ||
+                num.Length > 0;
         }
         
     }

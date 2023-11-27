@@ -1,4 +1,5 @@
-﻿using KommuneEditor.ViewModel;
+﻿using KommuneEditor.Model;
+using KommuneEditor.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +33,22 @@ namespace KommuneEditor
             };
             
         }
+        /*
+        private void grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                try
+                {
+                    DataGridRow row = sender as DataGridRow;
+                    Data data = (Data)row.Item;
+                    model.UpdateContact(data);
+                }
+                catch
+                {
+                }
+            }
+        }
+        */
     }
 }

@@ -122,10 +122,13 @@ namespace KommuneEditor.DataAccess
             string error = "";
             try
             {
-                SqlCommand command = new SqlCommand("DELETE FROM Kommune WHERE Kom_nr = @KomNr", connection);
+                SqlCommand command = new SqlCommand("DELETE FROM Data WHERE Kom_nr = @KomNr", connection);
                 command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
+                SqlCommand command2 = new SqlCommand("DELETE FROM Kommune WHERE Kom_nr = @KomNr", connection);
+                command2.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                 connection.Open();
-                if (command.ExecuteNonQuery() == 1)
+                command.ExecuteNonQuery();
+                if (command2.ExecuteNonQuery() == 1)
                 {
                     list.Remove(new Kommune(komNr, ""));
                     OnChanged(DbOperation.DELETE, DbModeltype.Kommune);
@@ -141,7 +144,7 @@ namespace KommuneEditor.DataAccess
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            throw new DbException("Error in Zipcode repositiory: " + error);
+            throw new DbException("Error in Kommune repositiory: " + error);
         }
 
         public static string GetCity(string komNr)

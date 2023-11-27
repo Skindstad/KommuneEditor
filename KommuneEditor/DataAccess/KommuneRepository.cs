@@ -87,7 +87,7 @@ namespace KommuneEditor.DataAccess
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE Kommune SET Kom_nr = @KomNr WHERE City = @city", connection);
+                    SqlCommand command = new SqlCommand("UPDATE Kommune SET City = @City WHERE Kom_nr = @KomNr", connection);
                     command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@City", city, SqlDbType.NVarChar));
                     connection.Open();

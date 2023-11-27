@@ -29,8 +29,9 @@ namespace KommuneEditor.DataAccess
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT Data.id, Data.Kom_nr, City, Gruppe, Aarstal, Tal FROM Data, Keynummer, Kommune  WHERE Data.Kom_nr LIKE @KomNr AND City LIKE @City AND Gruppe LIKE @Gruppe AND Aarstal LIKE @Year", connection);
-                command.Parameters.Add(CreateParam("@KomNr", komNr + "%", SqlDbType.NVarChar));
+                SqlCommand command = new SqlCommand("Select Data.Id, Data.Kom_nr, City, Gruppe, Aarstal, tal From Data Join Keynummer on Data.GruppeId = Keynummer.Id Join Kommune on Data.Kom_nr = Kommune.Kom_nr" +
+                    "WHERE Aarstal LIKE @Year AND City LIKE @City AND Gruppe LIKE @Gruppe", connection);
+                //command.Parameters.Add(CreateParam("@KomNr", komNr + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@City", city + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@Gruppe", gruppe + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@Year", year + "%", SqlDbType.NVarChar));

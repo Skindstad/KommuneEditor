@@ -15,11 +15,13 @@ namespace KommuneEditor.Model
 
         public Keynummer() 
         {
+            KeyId = "";
             Gruppe = "";
         }
 
-        public Keynummer(string gruppe)
+        public Keynummer(string id, string gruppe)
         {;
+            KeyId = id;
             Gruppe = gruppe;
         }
 

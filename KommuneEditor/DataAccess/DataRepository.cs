@@ -42,7 +42,7 @@ namespace KommuneEditor.DataAccess
             }
             catch (Exception ex)
             {
-                throw new DbException("Error in Contact repositiory: " + ex.Message);
+                throw new DbException("Error in Data repositiory: " + ex.Message);
             }
             finally
             {

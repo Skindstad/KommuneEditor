@@ -99,7 +99,7 @@ namespace KommuneEditor.Model
                 case "City": return ValidateCity();
                 case "Gruppe": return ValidateGruppe();
                 case "Year": return ValidateYear();
-                case "Tal": return ValidateTal();
+                case "Num": return ValidateTal();
             }
             return null;
         }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Windows.Input;
 
 namespace KommuneEditor.DataAccess
 {
@@ -21,17 +23,17 @@ namespace KommuneEditor.DataAccess
             return GetEnumerator();
         }
 
-        public void Search(string key, string gruppe)
+        public void Search(string id, string gruppe)
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT Gruppe FROM Keynummer WHERE Id LIKE @KeyId AND Gruppe LIKE @Gruppe", connection);
-                command.Parameters.Add(CreateParam("@KeyId", key + "%", SqlDbType.NVarChar));
+                SqlCommand command = new SqlCommand("SELECT Id, Gruppe FROM Keynummer WHERE Id LIKE @KeyId AND Gruppe LIKE @Gruppe", connection);
+                command.Parameters.Add(CreateParam("@Id", id + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@Gruppe", gruppe + "%", SqlDbType.NVarChar));
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
-                while (reader.Read()) list.Add(new Keynummer(reader[0].ToString()));
+                while (reader.Read()) list.Add(new Keynummer(reader[0].ToString(), reader[1].ToString()));
                 OnChanged(DbOperation.SELECT, DbModeltype.Keynummer);
             }
             catch (Exception ex)
@@ -48,12 +50,15 @@ namespace KommuneEditor.DataAccess
         {
             string error = "";
             gruppe = gruppe.Trim();
-            Keynummer keynummer = new Keynummer(gruppe);
+            int count = list.Count();
+            string keyId = (count + 1).ToString();
+            Keynummer keynummer = new Keynummer(keyId, gruppe);
             if (keynummer.IsValid)
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Keynummer (Gruppe) VALUES (@Gruppe)", connection);
+                    SqlCommand command = new SqlCommand("INSERT INTO Keynummer (Id, Gruppe) VALUES (@Id, @Gruppe)", connection);
+                    command.Parameters.Add(CreateParam("@Id", keyId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppe, SqlDbType.NVarChar));
                     connection.Open();
                     if (command.ExecuteNonQuery() == 1)
@@ -126,7 +131,7 @@ namespace KommuneEditor.DataAccess
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1)
                 {
-                    list.Remove(new Keynummer(key));
+                    list.Remove(new Keynummer(key, ""));
                     OnChanged(DbOperation.DELETE, DbModeltype.Keynummer);
                     return;
                 }

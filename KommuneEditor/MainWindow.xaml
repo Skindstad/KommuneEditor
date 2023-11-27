@@ -16,32 +16,36 @@
             </MenuItem>
         </Menu>
         <Grid>
-            <StackPanel Orientation="Vertical" Margin="10">
-                <TextBlock Text="Kommune"/>
-                <TextBox Grid.Row="1" Grid.Column="6" Height="22" HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding Path=City}" />
-                <TextBlock Text="Gruppe"/>
-                <TextBox Grid.Row="1" Grid.Column="6" Height="22" HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding Path=Gruppe}" />
-                <TextBlock Text="Aarstal"/>
-                <TextBox Grid.Row="1" Grid.Column="6" Height="22" HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding Path=Year}" />
-                
-                <Button Content="Search" Command="{Binding Path=SearchCommand}" Margin="0,10,0,0" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
 
-                <DataGrid Name="grid" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" Grid.Row="2" Grid.ColumnSpan="8" ItemsSource="{Binding BindData}">
-                    <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Data ID" Width="50" Binding="{Binding DataID}" />
-                        <DataGridTextColumn Header="KomNr" Width="50" Binding="{Binding KomNr}" />
-                        <DataGridTextColumn Header="By" Width="100" Binding="{Binding City}" />
-                        <DataGridTextColumn Header="Gruppe" Width="100" Binding="{Binding Gruppe}" />
-                        <DataGridTextColumn Header="Aarstal" Width="50" Binding="{Binding Year}" />
-                        <DataGridTextColumn Header="Nummer" Width="*" Binding="{Binding Num}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Top" Text="Kommune" Height="16" Margin="0,14,0,0"/>
+            <TextBlock Grid.Column="2" VerticalAlignment="Top" Text="Gruppe" Margin="0,14,0,0" Height="16"/>
+            <TextBlock Grid.Column="4" VerticalAlignment="Top" Text="Aarstal" Margin="0,14,0,0" Height="16"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Height="22" VerticalAlignment="Top" Text="{Binding Path=City}" />
+            <TextBox Grid.Row="1" Grid.Column="2" Height="22" VerticalAlignment="Top" Text="{Binding Path=Gruppe}" />
+            <TextBox Grid.Row="1" Grid.Column="4" Height="22" VerticalAlignment="Top" Text="{Binding Path=Year}" />
+
+            <Button Grid.Row="1" Grid.Column="8" Width="60" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Search" Command="{Binding Path=SearchCommand}" />
+
+            <DataGrid Name="grid" IsReadOnly="True" AutoGenerateColumns="True" CanUserAddRows="False" SelectionMode="Single" Grid.Row="2" Grid.ColumnSpan="9" ItemsSource="{Binding BindData}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <EventSetter Event="MouseDoubleClick" Handler="grid_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
         </Grid>
     </DockPanel>
 </Window>

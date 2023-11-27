@@ -33,7 +33,6 @@ namespace KommuneEditor
             };
             
         }
-        /*
         private void grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender != null)
@@ -49,6 +48,5 @@ namespace KommuneEditor
                 }
             }
         }
-        */
     }
 }

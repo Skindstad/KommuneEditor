@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Windows;
 using KommuneEditor.ViewModel;
-using KommuneEditor.Model;
 
 namespace KommuneEditor.View
 {
     /// <summary>
-    /// Interaction logic for CreateWindow.xaml
+    /// Interaction logic for KommuneWindow.xaml
     /// </summary>
-    public partial class CreateWindow : Window
+    public partial class KommuneWindow : Window
     {
-        private DataViewModel model = new DataViewModel(new Data(), MainViewModel.repository);
+        private KommuneViewModel model = new KommuneViewModel();
 
-        public CreateWindow()
+        public KommuneWindow()
         {
             InitializeComponent();
-            model.CloseHandler += delegate (object sender, EventArgs e) { Close(); };
             model.WarningHandler += delegate (object sender, MessageEventArgs e) {
                 MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             };
+            model.CloseHandler += delegate (object sender, EventArgs e) { Close(); };
             DataContext = model;
         }
     }

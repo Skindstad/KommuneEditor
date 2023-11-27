@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using KommuneEditor.View;
 
 namespace KommuneEditor.ViewModel
 {
@@ -16,7 +16,7 @@ namespace KommuneEditor.ViewModel
     {
         public RelayCommand SearchCommand { get; private set; }
         public RelayCommand CreateCommand { get; private set; }
-        public RelayCommand DataCommand { get; private set; }
+        public RelayCommand KommuneCommand { get; private set; }
         public RelayCommand ClearCommand { get; private set; }
         public static DataRepository repository = new DataRepository();
         private ObservableCollection<Data> bindData;
@@ -31,8 +31,8 @@ namespace KommuneEditor.ViewModel
         public MainViewModel()
         {
             SearchCommand = new RelayCommand(p => Search(), p => CanSearch());
-            //CreateCommand = new RelayCommand(p => (new CreateWindow()).ShowDialog());
-            //DataCommand = new RelayCommand(p => (new DataWindow()).ShowDialog());
+            CreateCommand = new RelayCommand(p => (new CreateWindow()).ShowDialog());
+            KommuneCommand = new RelayCommand(p => (new KommuneWindow()).ShowDialog());
             ClearCommand = new RelayCommand(p => Clear());
             bindData = new ObservableCollection<Data>(repository);
             repository.RepositoryChanged += Refresh;
@@ -136,7 +136,12 @@ namespace KommuneEditor.ViewModel
 
         private void Clear()
         {
-
+            DataId = "";
+            KomNr = "";
+            City = "";
+            Gruppe = "";
+            Year = "";
+            Num = "";
         }
         
         private void Search()
@@ -151,13 +156,13 @@ namespace KommuneEditor.ViewModel
                 OnWarning(ex.Message);
             }
         }
-        /*
+        
         public void UpdateContact(Data data)
         {
-            UpdateWindow dlg = new UpdateWindow(bindData);
+            UpdateWindow dlg = new UpdateWindow(data);
             dlg.ShowDialog();
         }
-        */
+        
         private bool CanSearch()
         {
             return komNr.Length > 0 || city.Length > 0 ||

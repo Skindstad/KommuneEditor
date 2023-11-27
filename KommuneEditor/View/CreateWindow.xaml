@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KommuneEditor.View"
         mc:Ignorable="d"
-        Title="CreateWindow" Height="450" Width="800">
+                  Title="Modify address" Height="370" Width="440" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type ValidationError}">
+                <TextBlock FontStyle="Italic" FontSize="10" Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Path=ErrorContent}" />
+            </DataTemplate>
+        </Grid.Resources>
+        <TextBlock Text="Kommune Nr." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,28,0,0" />
+        <TextBlock Text="By" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,80,0,0" />
+        <TextBlock Text="Gruppe" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,128,0,0" />
+        <TextBlock Text="Aarstal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,168,0,0" />
+        <TextBlock Text="Nummer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,228,0,0" />
+
+        <TextBox Name="txtKommuneNr" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,28,0,0" Width="80" Height="22" Text="{Binding Path=KomNr, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,55,0,0" Height="20" Content="{Binding ElementName=txtKommuneNr, Path=(Validation.Errors).CurrentItem}" />
+        <TextBox Name="txtCity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,80,0,0" Width="150" Height="22" Text="{Binding Path=City}" />
+        <TextBox Name="txtGruppe" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,128,0,0" Width="280" Height="22" Text="{Binding Path=Gruppe}" />
+        <TextBox Name="txtAarstal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,168,0,0" Width="50" Height="22" Text="{Binding Path=Year, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,193,0,0" Height="20" Content="{Binding ElementName=txtAarstal, Path=(Validation.Errors).CurrentItem}" />
+        <TextBox Name="txtNummer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,228,0,0" Width="280" Height="22" Text="{Binding Path=Num}" />
+
+        <Button Content="Ok" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="247,298,0,0" Width="70" Height="25" Command="{Binding Path=OkCommand}" />
+        <Button Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="337,298,0,0" Width="70" Height="25" Command="{Binding Path=CloseCommand}" />
     </Grid>
 </Window>

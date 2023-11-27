@@ -10,12 +10,11 @@ namespace KommuneEditor.View
     /// </summary>
     public partial class UpdateWindow : Window
     {
-        /*
-        private ContactViewModel model;
+        private DataViewModel model;
 
-        public UpdateWindow(Contact contact)
+        public UpdateWindow(Data data)
         {
-            model = new ContactViewModel(contact, MainViewModel.repository);
+            model = new DataViewModel(data, MainViewModel.repository);
             InitializeComponent();
             model.CloseHandler += delegate (object sender, EventArgs e) { Close(); };
             model.WarningHandler += delegate (object sender, MessageEventArgs e) {
@@ -23,6 +22,5 @@ namespace KommuneEditor.View
             };
             DataContext = model;
         }
-        */
     }
 }

@@ -29,8 +29,7 @@ namespace KommuneEditor.DataAccess
         {
             try
             {
-                SqlCommand command = new SqlCommand("Select Data.Id, Data.Kom_nr, City, Gruppe, Aarstal, tal From Data Join Keynummer on Data.GruppeId = Keynummer.Id Join Kommune on Data.Kom_nr = Kommune.Kom_nr" +
-                    "WHERE Aarstal LIKE @Year AND City LIKE @City AND Gruppe LIKE @Gruppe", connection);
+                SqlCommand command = new SqlCommand("Select Data.Id, Data.Kom_nr, City, Gruppe, Aarstal, Tal From Data Join Keynummer on Data.GruppeId = Keynummer.Id Join Kommune on Data.Kom_nr = Kommune.Kom_nr WHERE Aarstal LIKE @Year AND City LIKE @City AND Gruppe LIKE @Gruppe", connection);
                 //command.Parameters.Add(CreateParam("@KomNr", komNr + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@City", city + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@Gruppe", gruppe + "%", SqlDbType.NVarChar));
@@ -98,8 +97,12 @@ namespace KommuneEditor.DataAccess
             {
                 try
                 {
+                    string id = CountID();
+                    int to = int.Parse(id);
+                    id = (id + 1).ToString();
                     string gruppeId = KeyNummerRepository.GetId(data.Gruppe);
-                    SqlCommand command = new SqlCommand("INSERT INTO Data (Kom_nr, GruppeID, Aarstal, Tal) VALUES (@KomNr, @Gruppe, @Year, @Num)", connection);
+                    SqlCommand command = new SqlCommand("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
+                    command.Parameters.Add(CreateParam("@Id", id, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
@@ -155,7 +158,7 @@ namespace KommuneEditor.DataAccess
                         OnChanged(DbOperation.UPDATE, DbModeltype.Data);
                         return;
                     }
-                    error = string.Format("Contact could not be updated");
+                    error = string.Format("Data could not be updated");
                 }
                 catch (Exception ex)
                 {
@@ -166,8 +169,8 @@ namespace KommuneEditor.DataAccess
                     if (connection != null && connection.State == ConnectionState.Open) connection.Close();
                 }
             }
-            else error = "Illegal value for contact";
-            throw new DbException("Error in Contact repositiory: " + error);
+            else error = "Illegal value for Data";
+            throw new DbException("Error in Data repositiory: " + error);
         }
 
         private void UpdateList(Data data)
@@ -184,17 +187,18 @@ namespace KommuneEditor.DataAccess
                 }
         }
 
-        public void Remove(string Id)
+        public void Remove(Data data)
         {
             string error = "";
             try
             {
+                string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
                 SqlCommand command = new SqlCommand("DELETE FROM Data WHERE Id = @DataId", connection);
-                command.Parameters.Add(CreateParam("@DataId", Id, SqlDbType.NVarChar));
+                command.Parameters.Add(CreateParam("@DataId", dataId, SqlDbType.NVarChar));
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1)
                 {
-                    list.Remove(new Data(Id, "", "", "", "", ""));
+                    list.Remove(new Data(dataId, "", "", "", "", ""));
                     OnChanged(DbOperation.DELETE, DbModeltype.Data);
                     return;
                 }
@@ -228,6 +232,26 @@ namespace KommuneEditor.DataAccess
                 command.Parameters.Add(param);
                 command.Parameters.Add(param2);
                 command.Parameters.Add(param3);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read()) return reader[0].ToString();
+            }
+            catch
+            {
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+            return "";
+        }
+        public static string CountID()
+        {
+            SqlConnection connection = null;
+            try
+            {
+                connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
+                SqlCommand command = new SqlCommand("SELECT COUNT(Id )FROM Data", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read()) return reader[0].ToString();

@@ -137,7 +137,7 @@ namespace KommuneEditor.ViewModel
         {
             try
             {
-                repository.Remove(model.DataId);
+                repository.Remove(model);
                 OnClose();
             }
             catch (Exception ex)

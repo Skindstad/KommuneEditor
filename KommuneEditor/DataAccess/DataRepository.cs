@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using KommuneEditor.Model;
 using System.Configuration;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace KommuneEditor.DataAccess
 {
@@ -99,24 +100,33 @@ namespace KommuneEditor.DataAccess
                 {
                     string id = CountID();
                     int to = int.Parse(id);
-                    id = (id + 1).ToString();
-                    string gruppeId = KeyNummerRepository.GetId(data.Gruppe);
-                    SqlCommand command = new SqlCommand("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
-                    command.Parameters.Add(CreateParam("@Id", id, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@Num", data.Num, SqlDbType.NVarChar));
-                    connection.Open();
-                    if (command.ExecuteNonQuery() == 1)
+                    id = (to).ToString();
+                    bool check = Check(data.KomNr, data.Gruppe, data.Year);
+                    if (check == true)
                     {
-                        data.City = KommuneRepository.GetCity(data.KomNr);
-                        list.Add(data);
-                        list.Sort();
-                        OnChanged(DbOperation.INSERT, DbModeltype.Data);
-                        return;
+                        error = string.Format("Is already exist");
                     }
-                    error = string.Format("KomNr could not be inserted in the database");
+                    else
+                    {
+                        string gruppeId = KeyNummerRepository.GetId(data.Gruppe);
+                        SqlCommand command = new SqlCommand("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
+                        command.Parameters.Add(CreateParam("@Id", id, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@Num", data.Num, SqlDbType.NVarChar));
+                        connection.Open();
+                        if (command.ExecuteNonQuery() == 1)
+                        {
+                            data.DataId = id;
+                            data.City = KommuneRepository.GetCity(data.KomNr);
+                            list.Add(data);
+                            list.Sort();
+                            OnChanged(DbOperation.INSERT, DbModeltype.Data);
+                            return;
+                        }
+                        error = string.Format("KomNr could not be inserted in the database");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -264,6 +274,37 @@ namespace KommuneEditor.DataAccess
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             return "";
+        }
+
+        public static bool Check(string komNr, string gruppe, string year)
+        {
+            SqlConnection connection = null;
+            try
+            {
+                string GruppeID = KeyNummerRepository.GetId(gruppe);
+                connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
+                SqlCommand command = new SqlCommand("SELECT Id FROM Data WHERE GruppeId = @Gruppe AND Kom_Nr = @KomNr AND Aarstal = @Year", connection);
+                SqlParameter param = new SqlParameter("@Gruppe", SqlDbType.NVarChar);
+                SqlParameter param2 = new SqlParameter("@KomNr", SqlDbType.NVarChar);
+                SqlParameter param3 = new SqlParameter("@Year", SqlDbType.NVarChar);
+                param.Value = GruppeID;
+                param2.Value = komNr;
+                param3.Value = year;
+                command.Parameters.Add(param);
+                command.Parameters.Add(param2);
+                command.Parameters.Add(param3);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read()) return true;
+            }
+            catch
+            {
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+            return false;
         }
     }
 }

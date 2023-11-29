@@ -54,7 +54,7 @@ namespace KommuneEditor.ViewModel
 
         public string KomNr
         {
-            get { return model.KomNr; }
+            get { return model?.KomNr; }
             set
             {
                 if (!model.KomNr.Equals(value))
@@ -67,7 +67,7 @@ namespace KommuneEditor.ViewModel
 
         public string City
         {
-            get { return model.City; }
+            get { return model?.City; }
             set
             {
                 if (!model.City.Equals(value))
